@@ -68,6 +68,14 @@ The **Prompt Response Application** is an intelligent tool powered by Google Gen
 2. Enter prompts to analyze and process data.
 3. Download structured Word documents for your analysis.
 
+## 📷 Screenshots
+
+### 🏠 Home Page
+![vritti](https://github.com/user-attachments/assets/cf176430-fb7f-4bf1-8186-a25cad857aea)
+
+### 📄 Analysis Results
+![screencapture-localhost-5000-search-2024-11-30-05_53_47](https://github.com/user-attachments/assets/11ca9a7b-5727-42b5-bb85-cc25d5bf92fc)
+
 ## 🤝 Contributing
 
 We welcome contributions! Feel free to:
