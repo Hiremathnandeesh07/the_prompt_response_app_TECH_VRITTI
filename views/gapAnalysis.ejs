@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gap Analysis Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printableReport, #printableReport * {
+                visibility: visible;
+            }
+            #printableReport {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-100 to-gray-200 min-h-screen flex items-center justify-center p-4">
+    <div id="printableReport" class="w-full max-w-5xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <header class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white p-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-bold mb-2">Gap Analysis Report</h1>
+                    <p class="text-indigo-100 text-lg">Comprehensive Analysis and Strategic Insights</p>
+                </div>
+                <div class="bg-white/20 p-4 rounded-xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                    </svg>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-8">
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold text-gray-800 border-b-2 border-indigo-500 pb-3 mb-6">Executive Summary</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-blue-50 p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold text-blue-800 mb-4">Current State</h3>
+                        <p class="text-gray-700"><%= currentState %></p>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold text-green-800 mb-4">Target State</h3>
+                        <p class="text-gray-700"><%= targetState %></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold text-gray-800 border-b-2 border-indigo-500 pb-3 mb-6">Research Findings</h2>
+                <% scrapedResults.forEach((result, index) => { %>
+                    <article class="mb-6 p-6 bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <h3 class="text-xl font-semibold text-indigo-700 mb-2">Source <%= index + 1 %>: <%= result.title %></h3>
+                        <a 
+                            href="<%= result.link %>" 
+                            target="_blank" 
+                            class="text-blue-600 hover:text-blue-800 hover:underline block mb-3"
+                        >
+                            <%= result.link %>
+                        </a>
+                        <p class="text-gray-700 leading-relaxed"><%= result.content %></p>
+                    </article>
+                <% }); %>
+            </section>
+
+            <section class="mb-10">
+                <h2 class="text-2xl font-semibold text-gray-800 border-b-2 border-indigo-500 pb-3 mb-6">Gap Analysis Details</h2>
+                <div 
+                    id="gapAnalysis" 
+                    class="bg-gradient-to-br from-gray-100 to-gray-200 p-8 rounded-xl shadow-inner"
+                >
+                    <%- gapAnalysis %>
+                </div>
+            </section>
+
+            <div class="flex justify-center space-x-4 mt-8 no-print">
+                <button 
+                    id="downloadButton" 
+                    class="flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors shadow-lg"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-9.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                    Download Report
+                </button>
+                <button 
+                    onclick="window.print()" 
+                    class="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors shadow-lg"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd" />
+                    </svg>
+                    Print Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('downloadButton').addEventListener('click', () => {
+            const gapAnalysisContent = document.getElementById('gapAnalysis').innerHTML;
+
+            fetch('/download-gap-analysis', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ gapAnalysis: gapAnalysisContent }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to download the file.');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'Gap_Analysis_Report.docx';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            })
+            .catch(error => {
+                console.error('Error downloading file:', error);
+                alert('Failed to download the file. Please try again.');
+            });
+        });
+        document.getElementById('downloadButton').addEventListener('click', () => {
+    // Extract plain text from the Gap Analysis content displayed on the webpage
+    const gapAnalysisContent = document.getElementById('gapAnalysis').innerText; // Extract clean text displayed on the page
+
+    fetch('/download-gap-analysis', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ gapAnalysis: gapAnalysisContent }), // Send clean text
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to download the file.');
+        }
+        return response.blob();
+    })
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Gap_Analysis.docx';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    })
+    .catch(error => {
+        console.error('Error downloading file:', error);
+        alert('Failed to download the file. Please try again.');
+    });
+});
+
+    </script>
+</body>
+</html>

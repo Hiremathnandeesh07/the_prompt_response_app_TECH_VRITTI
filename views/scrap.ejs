@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Content Insights</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen flex items-center justify-center font-sans text-gray-800 p-6">
+    <div class="w-full max-w-5xl mx-auto bg-white shadow-2xl rounded-3xl overflow-hidden">
+        <div class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white p-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-4xl font-bold tracking-tight mb-3">
+                        Web Content Discovery
+                    </h2>
+                    <p class="text-indigo-100 text-lg">Comprehensive Insights from Targeted Web Research</p>
+                </div>
+                <div class="bg-white/20 p-4 rounded-xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-10">
+            <% if (scrapedResults && scrapedResults.length > 0) { %>
+                <div class="space-y-6">
+                    <% scrapedResults.forEach(function(result, index) { %>
+                        <div class="bg-blue-50 border-l-6 border-indigo-500 p-6 rounded-r-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                            <a 
+                                href="<%= result.link %>" 
+                                target="_blank" 
+                                class="text-2xl font-semibold text-indigo-700 hover:text-indigo-900 mb-3 block flex items-center"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                                </svg>
+                                <%= result.title %>
+                            </a>
+                            <p class="text-gray-600 text-base leading-relaxed">
+                                <%= result.content %>
+                            </p>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <div class="text-center py-16 bg-gray-100 rounded-2xl shadow-inner">
+                    <div class="flex justify-center mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1m-2.526 2.527L4.878 15.9a3 3 0 104.243 4.243l1.102-1.102m2.526-2.527l1.1-1.1m-2.527-2.526L15.9 7.878a3 3 0 114.242 4.242l-1.101 1.102m-2.527 2.526L7.878 15.9a3 3 0 01-4.243-4.243l1.102-1.102m2.527-2.526L15.9 4.878a3 3 0 014.242 4.242l-1.101 1.102m-2.527 2.526L4.878 15.9" />
+                        </svg>
+                    </div>
+                    <p class="text-gray-500 text-xl">No data was found for the target state. Please try again later.</p>
+                </div>
+            <% } %>
+
+            <div class="text-center mt-10">
+                <form action="/gap-analysis" method="POST" class="inline-block">
+                    <input type="hidden" name="targetState" value="<%= targetState %>">
+                    <input type="hidden" name="currentState" value="<%= currentState %>">
+                    <input type="hidden" name="scrapedResults" value='<%= JSON.stringify(scrapedResults) %>'>
+                    <button 
+                        type="submit" 
+                        class="flex items-center justify-center gap-3 bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition-colors shadow-lg"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                        </svg>
+                        Perform Gap Analysis
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Optional: Add some client-side interactivity
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('mouseover', (e) => {
+                e.target.style.textDecoration = 'underline';
+            });
+            link.addEventListener('mouseout', (e) => {
+                e.target.style.textDecoration = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
