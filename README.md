@@ -19,6 +19,8 @@ The **Prompt Response Application** is an intelligent tool powered by Google Gen
 - **Frontend**: 🎨 EJS for dynamic rendering.
 - **Backend**: 🖥️ Node.js with Express.js.
 - **AI Integration**: 🤖 Google Generative AI (`@google/generative-ai`).
+  
+  ***click here to get your APIkey*** [https://ai.google.dev/gemini-api/docs/api-key]
 - **Web Scraping**: 🌍 Puppeteer.
 - **Document Generation**: 📃 `docx` library.
 - **Utilities**: ✍️ Markdown-It for parsing markdown.
